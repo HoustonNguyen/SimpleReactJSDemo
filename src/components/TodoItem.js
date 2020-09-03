@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
     getStyle = () => {
@@ -31,6 +32,13 @@ const delButtonStyle = {
     float: "right",
     cursor: "pointer",
     fontWeight: "bolder"
+}
+
+// PropTypes
+TodoItem.propTypes = {
+    todo: PropTypes.object.isRequired,
+    statusChanged: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 }
 
 export default TodoItem;

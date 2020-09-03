@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TodoItem from "./TodoItem";
+import PropTypes from 'prop-types';
 
-export class TodoList extends Component {
+class TodoList extends Component {
   render() {
     return this.props.todoCollection
       .sort((a, b) => a.status - b.status)
@@ -10,3 +11,12 @@ export class TodoList extends Component {
       ));
   }
 }
+
+// PropTypes
+TodoItem.propTypes = {
+  todoCollection: PropTypes.array.isRequired,
+  statusChanged: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
+}
+
+export default TodoList;
