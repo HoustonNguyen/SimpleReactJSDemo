@@ -3,6 +3,8 @@ import './App.css';
 import { v4 as uuid } from "uuid";
 
 import { TodoList } from "./components/TodoList";
+import { AddTodo } from "./components/AddTodo";
+import Header from "./components/Header";
 
 class ToDo {
   constructor(title = null) {
@@ -23,10 +25,33 @@ class App extends Component {
     ]
   };
 
+  statusChanged = (targetedTodo, event) => {
+    const toStatus = event.target.checked;
+    this.setState({ todoCollection: this.state.todoCollection.map(todo => {
+      if(todo.id === targetedTodo.id) {
+        todo.status = toStatus;
+      }
+      return todo;
+    }) });
+  }
+
+
+  onDelete = (targetedTodoId) => {
+    this.setState({  todoCollection: [...this.state.todoCollection.filter(todo => todo.id !== targetedTodoId)]});
+  }
+
+  addTodo = (todoTitle) => {
+    this.setState({  todoCollection: [...this.state.todoCollection, new ToDo(todoTitle)]});
+  }
 
   render() {
     return (
-      <TodoList todoCollection={this.state.todoCollection} />
+      <div className="App">
+        <Header />
+        <AddTodo addTodo={this.addTodo} />
+        <TodoList todoCollection={this.state.todoCollection} statusChanged={this.statusChanged} onDelete={this.onDelete} />
+      </div>
+      
     );
   }
   
