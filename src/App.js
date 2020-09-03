@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import { v4 as uuid } from "uuid";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { TodoList } from "./components/TodoList";
-import { AddTodo } from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
 import Header from "./components/Header";
+import About from './components/About';
 
 class ToDo {
   constructor(title = null) {
@@ -46,12 +48,21 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Header />
-        <AddTodo addTodo={this.addTodo} />
-        <TodoList todoCollection={this.state.todoCollection} statusChanged={this.statusChanged} onDelete={this.onDelete} />
-      </div>
-      
+      <Router>
+        <div className="App">
+          <Header />
+          <Route exact
+              path="/"
+              render={props => (
+                <React.Fragment>
+                  <AddTodo addTodo={this.addTodo} />
+                  <TodoList todoCollection={this.state.todoCollection} statusChanged={this.statusChanged} onDelete={this.onDelete} />
+                </React.Fragment>
+              )}
+            />
+          <Route path="/about" component={About}></Route>
+        </div>
+      </Router>
     );
   }
   
